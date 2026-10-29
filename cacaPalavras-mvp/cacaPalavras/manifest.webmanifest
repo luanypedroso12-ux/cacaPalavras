@@ -1,0 +1,12 @@
+{
+  "name": "cacaPalavras — desafio diário",
+  "short_name": "cacaPalavras",
+  "description": "Dois jogos de palavras em um desafio diário.",
+  "lang": "pt-BR",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fffaf0",
+  "theme_color": "#ffcf4a",
+  "icons": []
+}

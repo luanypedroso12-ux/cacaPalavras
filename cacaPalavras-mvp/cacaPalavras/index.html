@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffcf4a">
+  <meta name="description" content="Dois desafios diários de palavras em um jogo colorido e acessível.">
+  <title>cacaPalavras — seu desafio diário</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="cacaPalavras — início">
+        <span class="brand-mark" aria-hidden="true">✳</span>
+        <span>caca<span class="brand-accent">Palavras</span></span>
+      </a>
+      <div class="top-actions">
+        <button id="stats-toggle" class="icon-button" type="button" aria-expanded="false" aria-controls="stats-panel"><span aria-hidden="true">▤</span><span class="sr-only" data-i18n="stats">Estatísticas</span></button>
+        <label class="language-label" for="language-select" data-i18n="language">Idioma</label>
+        <select id="language-select" aria-label="Idioma">
+          <option value="pt">PT-BR</option><option value="en">EN</option>
+        </select>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="daily">DESAFIO DE HOJE</p>
+          <h1 data-i18n="headline">Duas maneiras de brincar com palavras.</h1>
+          <p class="hero-subtitle" data-i18n="subtitle">Um minutinho de diversão, uma dose de descoberta. Escolha seu jogo!</p>
+          <div class="date-chip"><span aria-hidden="true">☀</span> <span id="today-label"></span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <span class="float-tile tile-one">A</span><span class="float-tile tile-two">✦</span>
+          <span class="float-tile tile-three">W</span><span class="float-tile tile-four">?</span>
+          <span class="art-spark spark-one">✳</span><span class="art-spark spark-two">✦</span>
+        </div>
+      </section>
+
+      <section class="mode-picker" aria-label="Escolha um modo de jogo">
+        <button class="mode-card active" id="mode-guess" data-mode="guess" type="button" aria-pressed="true">
+          <span class="mode-icon guess-icon" aria-hidden="true">▦</span>
+          <span class="mode-copy"><strong data-i18n="guessTitle">Adivinhar</strong><small data-i18n="guessDesc">Descubra a palavra em seis tentativas.</small></span>
+          <span class="mode-arrow" aria-hidden="true">↗</span>
+        </button>
+        <button class="mode-card" id="mode-search" data-mode="search" type="button" aria-pressed="false">
+          <span class="mode-icon search-icon" aria-hidden="true">⌕</span>
+          <span class="mode-copy"><strong data-i18n="searchTitle">Caça-palavras</strong><small data-i18n="searchDesc">Encontre todas as palavras escondidas.</small></span>
+          <span class="mode-arrow" aria-hidden="true">↗</span>
+        </button>
+      </section>
+
+      <section class="game-panel" aria-labelledby="game-title">
+        <div class="game-heading">
+          <div><p class="eyebrow" data-i18n="dailyChallenge">DESAFIO DIÁRIO</p><h2 id="game-title" data-i18n="guessTitle">Adivinhar</h2></div>
+          <span class="daily-pill"><span aria-hidden="true">●</span> <span data-i18n="today">HOJE</span></span>
+        </div>
+        <p id="game-instructions" class="game-instructions" data-i18n="guessInstructions">Digite uma palavra de 5 letras. As pistas mostram o quanto você chegou perto.</p>
+
+        <div id="guess-view">
+          <div id="guess-board" class="guess-board" role="group" aria-label="Tabuleiro de tentativas"></div>
+          <form id="guess-form" class="guess-form" autocomplete="off">
+            <label class="sr-only" for="guess-input" data-i18n="yourGuess">Sua tentativa</label>
+            <input id="guess-input" maxlength="5" minlength="5" pattern="[A-Za-zÀ-ÿ]{5}" autocapitalize="characters" spellcheck="false" placeholder="PALAVRA" aria-describedby="guess-help">
+            <button class="primary-button" type="submit" data-i18n="check">Conferir</button>
+          </form>
+          <p id="guess-help" class="helper-text" data-i18n="guessHelp">Use letras; acentos são aceitos.</p>
+        </div>
+
+        <div id="search-view" hidden>
+          <div class="word-list-wrap"><p class="list-label" data-i18n="findThese">ENCONTRE ESTAS PALAVRAS</p><ul id="target-list" class="target-list"></ul></div>
+          <div id="word-grid" class="word-grid" role="group" aria-label="Grade de caça-palavras"></div>
+          <p class="helper-text" data-i18n="searchHelp">Toque na primeira e na última letra da palavra, em linha reta.</p>
+        </div>
+        <div class="game-footer">
+          <p id="game-message" role="status" aria-live="polite" class="game-message"></p>
+          <button id="share-button" type="button" class="share-button"><span aria-hidden="true">↗</span> <span data-i18n="share">Compartilhar resultado</span></button>
+        </div>
+      </section>
+
+      <section id="stats-panel" class="stats-panel" hidden>
+        <div class="section-heading"><div><p class="eyebrow" data-i18n="yourJourney">SUA JORNADA</p><h2 data-i18n="stats">Estatísticas</h2></div><button id="stats-close" class="close-button" type="button" data-i18n="close">Fechar</button></div>
+        <div class="stats-grid">
+          <div class="stat-card"><strong id="stat-played">0</strong><span data-i18n="played">Jogos</span></div>
+          <div class="stat-card"><strong id="stat-won">0</strong><span data-i18n="won">Vitórias</span></div>
+          <div class="stat-card"><strong id="stat-rate">0%</strong><span data-i18n="winRate">Taxa de vitória</span></div>
+          <div class="stat-card"><strong id="stat-streak">0</strong><span data-i18n="streak">Sequência atual</span></div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer"><span data-i18n="footer">Feito para pausas felizes.</span><span>✳ <span data-i18n="offlineReady">Jogue offline depois da primeira visita</span></span></footer>
+  </div>
+  <script src="app.js" defer></script>
+</body>
+</html>
